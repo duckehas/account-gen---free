@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Roblox Account Generator</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+    }
+
+    #particles-js {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: #0d0d0d;
+      z-index: -1;
+    }
+
+    .container {
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+      text-align: center;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 30px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 400px;
+      margin: 0 auto;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .output {
+      margin-top: 20px;
+      font-size: 16px;
+      font-family: monospace;
+      background: transparent;
+      color: inherit;
+      padding: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="particles-js"></div>
+
+  <div class="container">
+    <h2>Roblox Account Generator</h2>
+    <button onclick="generateAccount()">Generate</button>
+    <div class="output" id="output"></div>
+  </div>
+
+  <!-- Particles.js Library -->
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <script>
+    particlesJS("particles-js", {
+      particles: {
+        number: { value: 60 },
+        color: { value: "#ffffff" },
+        shape: { type: "circle" },
+        opacity: { value: 0.5 },
+        size: { value: 3 },
+        line_linked: {
+          enable: true,
+          distance: 150,
+          color: "#ffffff",
+          opacity: 0.4,
+          width: 1
+        },
+        move: {
+          enable: true,
+          speed: 3
+        }
+      },
+      interactivity: {
+        detect_on: "canvas",
+        events: {
+          onhover: { enable: true, mode: "repulse" }
+        },
+        modes: {
+          repulse: { distance: 100 }
+        }
+      },
+      retina_detect: true
+    });
+  </script>
+
+  <script>
+    function generateUsername() {
+      const letters = 'abcdefghijklmnopqrstuvwxyz';
+      const numbers = '0123456789';
+      let username = letters[Math.floor(Math.random() * letters.length)];
+      const length = Math.floor(Math.random() * 10) + 5;
+      const chars = letters + letters.toUpperCase() + numbers;
+      for (let i = 1; i < length; i++) {
+        username += chars[Math.floor(Math.random() * chars.length)];
+      }
+      return username;
+    }
+
+    function generatePassword(length = 12) {
+      const upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      const lower = "abcdefghijklmnopqrstuvwxyz";
+      const numbers = "0123456789";
+      const special = "!@#$%^&*()_+{}[]<>?";
+      const all = upper + lower + numbers + special;
+
+      let password = "";
+      password += upper[Math.floor(Math.random() * upper.length)];
+      password += lower[Math.floor(Math.random() * lower.length)];
+      password += numbers[Math.floor(Math.random() * numbers.length)];
+      password += special[Math.floor(Math.random() * special.length)];
+
+      for (let i = 4; i < length; i++) {
+        password += all[Math.floor(Math.random() * all.length)];
+      }
+
+      return password.split('').sort(() => 0.5 - Math.random()).join('');
+    }
+
+    function generateAccount() {
+      const username = generateUsername();
+      const password = generatePassword();
+      document.getElementById('output').innerHTML = `
+        <strong>Username:</strong> ${username}<br>
+        <strong>Password:</strong> ${password}
+      `;
+    }
+  </script>
+</body>
+</html>
